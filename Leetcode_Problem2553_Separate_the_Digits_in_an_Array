@@ -1,0 +1,66 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* separateDigits(int* nums, int numsSize, int* returnSize){
+    int *ans = malloc(5000001*sizeof(int)) , *arr = malloc(6*sizeof(int)) , arr_length;
+    *returnSize=0;
+    for(int i = 0 ; i < numsSize ; i++)
+    {
+        arr_length = 0;
+        while(nums[i])
+        {
+            arr[arr_length++] = nums[i] % 10;
+            nums[i] = nums[i] / 10;
+        }
+        while(arr_length)
+            ans[(*returnSize)++]=arr[--arr_length];
+    }
+    free(arr);
+    return ans;
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* separateDigits(int* nums, int numsSize, int* returnSize) {
+    int len, num, *ans = malloc(6000*sizeof(int));
+    *returnSize = 0;
+    for (int i = 0; i < numsSize; i++)
+    {
+        len = log10(nums[i]) + 1;
+        for (int k = len ; k ; k--)
+        {
+            ans[*returnSize + k - 1] = nums[i] % 10;
+            nums[i] /= 10;
+        }
+        *returnSize += len;
+    }
+    return ans;
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+int* separateDigits(int* nums, int numsSize, int* returnSize) {
+	char a[6500] = "" , buf[7] = "";
+	register unsigned short i, j = 0, answer_len;
+	for(i = 0; i < numsSize; i++) 
+    {
+		snprintf(buf, 7, "%d", nums[i]);
+		strcat(a, buf);
+	}
+	*returnSize = strlen(a);
+	int * answer = malloc(strlen(a) * sizeof(int));
+	while(a[j] != '\0') 
+    {
+		answer[j] = a[j] - '0';
+		j++;
+	}
+
+	return answer;
+}
